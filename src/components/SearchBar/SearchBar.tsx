@@ -8,36 +8,14 @@ import { FiNavigation2 } from "react-icons/fi";
 
 import React, { ChangeEvent } from 'react';
 
-// type InputProps = {
-//   value: string | number;
-//   type: 'text' | 'number';
-//   onChange: (value: string | number) => void;
-// }
+type SearchBarProps = {
+    onSearch: (newTopic: string) => void;
+}
 
-// function Input({ value, type, onChange }: InputProps) {
+export default function SearchBar({ onSearch }: SearchBarProps) {
 
-//   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-//     let newValue = event.target.value;
-
-//     if (type === 'number') {
-//       newValue = Number(newValue);
-//     }
-    
-//     console.log('Змінене значення:', newValue);
-//     onChange(newValue);
-//   };
-
-  type SearchBarProps = {
-    value: string | number;
-    type?: 'text' | 'number';
-    onSearch: (value: string | number) => void;
-    onFilter: (value: string | number) => void;
-  }
-
-export default function SearchBar({ value, onSearch, onFilter }: SearchBarProps) {
-
-    const formRef = useRef(1)
-    const [cliks, setClik] = useState('');
+    // const formRef = useRef<HTMLElement | null>(null)
+    // const [cliks, setClik] = useState('');
 
     // const handleScroll = () => {
     //     const dimsScrol = formRef.current.getBoundingClientRect();
@@ -60,21 +38,21 @@ export default function SearchBar({ value, onSearch, onFilter }: SearchBarProps)
     //     onSearch(topic);
     //     window.scrollTo(0, 1);
     //     form.reset();
-    // };
-    
+    // }
     const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        // const form = evt.target;
-        const topic = evt.target.elements.topic.value.toLowerCase().trim();
+        const form = evt.target as HTMLFormElement;
+        const inputForm = form.elements.namedItem("topic") as HTMLInputElement
+        const topic = inputForm.value.toLowerCase().trim();
         // Якщо текстове поле порожнє, виводимо повідомлення ('enter a name.') і припиняємо виконання функції.
-        if (evt.target.elements.topic.value.trim() === "") {
+        if (topic === "") {
             notify()
             return;
         }
         // У протилежному випадку викликаємо пропс  і передаємо йому значення поля
         onSearch(topic);
         // window.scrollTo(0, 1);
-        evt.target.reset();
+        form.reset();
     };
 
     return (
@@ -83,7 +61,7 @@ export default function SearchBar({ value, onSearch, onFilter }: SearchBarProps)
             <header className={css.header}>
                 <div className={css.items}>
                     {/* <form ref={formRef} className={css.form} onSubmit={handleSubmit}> */}
-                    <form  className={css.form} onSubmit={handleSubmit}>
+                    <form className={css.form} onSubmit={handleSubmit}>
                         <button className={css.submitButton} type="submit"> <CiSearch /></button>
                         <Toaster />
 
@@ -91,11 +69,12 @@ export default function SearchBar({ value, onSearch, onFilter }: SearchBarProps)
                             placeholder="Please enter the name"
                             name="topic"
                             required
-                            autoFocus type="text" value={value}
-                            onChange={(e) => onFilter(e.target.value)}
+                            autoFocus type="text"
+                        // value={value}
+
                         />
                     </form>
-                    
+
                     {/* <button onClick={handleScroll} className={css.buttonRef} type="clik"> {cliks} <FiNavigation2 /></button> */}
                 </div>
             </header >

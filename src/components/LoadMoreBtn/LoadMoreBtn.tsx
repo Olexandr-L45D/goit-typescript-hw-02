@@ -2,20 +2,20 @@ import { number } from 'yup';
 import css from './LoadMoreBtn.module.css';
 import React, { MouseEvent } from 'react';
 
- type LoadMoreBtnProps = {
-    onAdd: (values: string, id: number)=> void;
-    };
+//  type LoadMoreBtnProps = {
+//     onAdd: (values: string, id: number)=> void;
+//     };
 
     // type handleClickProps = {
     //     values: string | number | null;
     // }
 
-export default function LoadMoreBtn({ onAdd }: LoadMoreBtnProps) {
+export default function LoadMoreBtn({ onAdd }) {
 
     const handleClick = (values: MouseEvent<HTMLButtonElement>) => {
         // values.stopPropagation();
         // onAdd<T>(values: T);
-        onAdd(values: LoadMoreBtnProps)
+        onAdd(values)
         // console.log(values);
     };
     return <>

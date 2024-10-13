@@ -8,14 +8,12 @@ import { getAsyncImage } from "../../articles-api"
 import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn"
 import ImageModal from "../ImageModal/ImageModal"
-import { Articles } from "../../types";
+import { ModalPicture, UserPicture } from "../../types";
 
 export default function App() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedPicture, setSelected] = useState<Articles | null>(null);
-  // чи вірно тут null = useState<null>(null); ?
-  const [articles, setArticles] = useState<Articles[]>([]);
-  // const [articles, setArticles] = useState<interface>([]);
+  const [selectedPicture, setSelected] = useState<ModalPicture | null>(null);
+  const [articles, setArticles] = useState<UserPicture[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [totalPages, setTotalPages] = useState<number>(1000);
@@ -29,11 +27,11 @@ export default function App() {
     if (topic === "") {
       return;
     };
-    async function getArticles<T>(): Promise<T> {
+    async function getArticles() {
       try {
         setLoading(true);
         setError(false);
-        const data: T = await getAsyncImage(topic, page);
+        const data = await getAsyncImage(topic, page);
         setArticles((prevState) => [...prevState, ...data.results]); // подвійне розпилення обовязкове тому що ми додаємо до вже існуючого масиву/сторінки
         setTotalPages(data.total_pages);
       } catch (error) {
@@ -46,21 +44,21 @@ export default function App() {
     console.log(topic);
   }, [page, topic]);
 
-  const handleSearch = (newTopic):void => {
+  const handleSearch = (newTopic: string): void => {
     setTopic(newTopic);
     setPage(1);
     setArticles([]);
   };
   // функція handleLoadMore при події клік на кнопці- додавання нових порцій сторінок(збільшую знач page на один, відключаю кнопку, після запиту на сервер відмаловуємо розмітку і включаю як прийшов позитивний результат)
-  const handleLoadMore = ():void => {
+  const handleLoadMore = (): void => {
     setPage(page + 1);
   };
-  const openModal = (data):void => {
+  const openModal = (data: ModalPicture): void => {
     setIsOpen(true);
     setSelected(data)
   };
 
-  function closeModal():void {
+  function closeModal(): void {
     setIsOpen(false);
     setSelected(null)
   }
@@ -68,7 +66,7 @@ export default function App() {
   return (
     <>
       <div className={css.headers}>
-        <SearchBar onSearch={handleSearch} onFilter={setFilter} />
+        <SearchBar onSearch={handleSearch} />
       </div>
       <div>
         <>

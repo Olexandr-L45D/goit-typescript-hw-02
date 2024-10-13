@@ -3,7 +3,36 @@ import { FiUser } from "react-icons/fi";
 import { FiThumbsUp } from "react-icons/fi";
 import { FiInstagram } from "react-icons/fi";
 
-export default function ImageCard({ obj, onClick }) {
+// type User = {
+//     name: string;
+//     email: string;
+//   };
+  
+//   type Props = {
+//     user: User;
+//     onUserUpdate: (user: User) => void;
+//   };
+  
+//   export function UserProfile({ user, onUserUpdate }: Props) {
+//     // компонент UserProfile
+//     return null;
+//   }
+
+type User = {
+    
+    user: {first_name: string;
+    instagram_username: string;};
+    likes: string;
+     tags: string; 
+    urls: { small: undefined }
+  };
+  
+  type Props = {
+    obj: User;
+    onClick: (user: User) => void;
+  };
+  
+export default function ImageCard<T>({ obj, onClick }: Props) {
 
     const {
         user: { first_name, instagram_username }, likes, tags, urls: { small }
@@ -13,7 +42,7 @@ export default function ImageCard({ obj, onClick }) {
 
         <div className={css.card}  >
 
-            <img className={css.imag} src={small} alt={tags} onClick={onClick} />
+            {/* <img className={css.imag} src={small} alt={tags} onClick={onClick} /> */}
 
             <div className={css.cardCommant}>
                 <div className={css.comItem}>
@@ -30,4 +59,13 @@ export default function ImageCard({ obj, onClick }) {
         </div>
 
     );
-}
+};
+
+// типізація чілдренів children в функції яка повертає розмітку (типами вбудованими в РЕАКТ)
+// type Props = {
+//     children: React.ReactElement;
+//   };
+  
+//   export function Panel({ children }: Props) {
+//     return <div>{children}</div>;
+//   }

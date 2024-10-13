@@ -1,7 +1,14 @@
 import css from './ImageGallery.module.css';
 import ImageCard from "../ImageCard/ImageCard"
+import { Articles } from '../../types';
 
-export default function ImageGallery({ items, onClick }) {
+
+interface ImageGalleryProps {
+    items: Articles[];
+     onClick:(id: number) => void;
+}
+
+export default function ImageGallery: React.FC<ImageGalleryProps>({ items, onClick }) {
 
     return (
         <main>

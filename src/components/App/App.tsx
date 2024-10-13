@@ -8,17 +8,19 @@ import { getAsyncImage } from "../../articles-api"
 import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn"
 import ImageModal from "../ImageModal/ImageModal"
+import { Articles } from "../../types";
 
 export default function App() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedPicture, setSelected] = useState(null);
-  const [articles, setArticles] = useState([]);
-  // const [filter, setFilter] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [totalPages, setTotalPages] = useState(1000);
-  const [page, setPage] = useState(1);
-  const [topic, setTopic] = useState(() => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [selectedPicture, setSelected] = useState<Articles | null>(null);
+  // чи вірно тут null = useState<null>(null); ?
+  const [articles, setArticles] = useState<Articles[]>([]);
+  // const [articles, setArticles] = useState<interface>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [totalPages, setTotalPages] = useState<number>(1000);
+  const [page, setPage] = useState<number>(1);
+  const [topic, setTopic] = useState<string>(() => {
     const savClicks = window.localStorage.getItem("my-clicks");
     return savClicks !== null && JSON.parse(savClicks) && "";
   });
@@ -26,12 +28,12 @@ export default function App() {
   useEffect(() => {
     if (topic === "") {
       return;
-    }
-    async function getArticles() {
+    };
+    async function getArticles<T>(): Promise<T> {
       try {
         setLoading(true);
         setError(false);
-        const data = await getAsyncImage(topic, page);
+        const data: T = await getAsyncImage(topic, page);
         setArticles((prevState) => [...prevState, ...data.results]); // подвійне розпилення обовязкове тому що ми додаємо до вже існуючого масиву/сторінки
         setTotalPages(data.total_pages);
       } catch (error) {
@@ -44,21 +46,21 @@ export default function App() {
     console.log(topic);
   }, [page, topic]);
 
-  const handleSearch = (newTopic) => {
+  const handleSearch = (newTopic):void => {
     setTopic(newTopic);
     setPage(1);
     setArticles([]);
   };
   // функція handleLoadMore при події клік на кнопці- додавання нових порцій сторінок(збільшую знач page на один, відключаю кнопку, після запиту на сервер відмаловуємо розмітку і включаю як прийшов позитивний результат)
-  const handleLoadMore = () => {
+  const handleLoadMore = ():void => {
     setPage(page + 1);
   };
-  const openModal = (data) => {
+  const openModal = (data):void => {
     setIsOpen(true);
     setSelected(data)
   };
 
-  function closeModal() {
+  function closeModal():void {
     setIsOpen(false);
     setSelected(null)
   }
@@ -87,7 +89,23 @@ export default function App() {
 }
 
 
+// приклад типізації станів компонента завантаження
+// type Status = 'loading' | 'idle' | 'error';
 
+// export function LoadingComponent() {
+//   const [status, setStatus] = useState<Status>('idle');
+
+//   const loadData = async () => {
+//     setStatus('loading');
+//     try {
+//       // Тут була б ваша логіка завантаження даних
+//       // У випадку успіху:
+//       setStatus('idle');
+//     } catch (error) {
+//       // У випадку помилки:
+//       setStatus('error');
+//     }
+//   };
 
 
 

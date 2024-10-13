@@ -1,7 +1,11 @@
 
-import css from "./ErrorMessage.module.css"
+import css from "./ErrorMessage.module.css";
 
-export default function ErrorMessage({ error }) {
+type Props = {
+    error: React.ReactElement;
+  };
+//   який тип повертає функція ErrorMessage ?
+export default function ErrorMessage({ error }: Props) {
 
     return (
         <div className={css.notifCard}>

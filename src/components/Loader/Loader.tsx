@@ -3,10 +3,10 @@ import { ColorRing } from 'react-loader-spinner'
 import React from 'react';
 
 type Props = {
-    params: React.ReactElement;
-    };
+    rotatingLoader: React.ReactNode;
+};
 
-export default function RotatingLoader(params: Props) {
+export default function RotatingLoader({ rotatingLoader }: Props) {
     return (
         <div className={css.container}>
             <ColorRing
@@ -22,6 +22,21 @@ export default function RotatingLoader(params: Props) {
     )
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // export default function RotatingLoader(params) {
 //     return (
@@ -40,11 +55,21 @@ export default function RotatingLoader(params: Props) {
 
 // };
 
-// type Props = {
-// children: React.ReactElement;
-// };
+// приклад типізації станів компонента завантаження
+// type Status = 'loading' | 'idle' | 'error';
 
-// export function Panel({ children }: Props) {
-// return <div>{children}</div>;
-// }
+// export function LoadingComponent() {
+//   const [status, setStatus] = useState<Status>('idle');
+
+//   const loadData = async () => {
+//     setStatus('loading');
+//     try {
+//       // Тут була б ваша логіка завантаження даних
+//       // У випадку успіху:
+//       setStatus('idle');
+//     } catch (error) {
+//       // У випадку помилки:
+//       setStatus('error');
+//     }
+//   };
 

@@ -2,16 +2,18 @@ import css from "./ImageCard.module.css"
 import { FiUser } from "react-icons/fi";
 import { FiThumbsUp } from "react-icons/fi";
 import { FiInstagram } from "react-icons/fi";
-import { ModalPicture, UserPicture } from "../../types";
-import { MouseEventHandler } from "react";
+import { ModalPicture } from "../../types";
   
   type Props = {
       obj: ModalPicture;
       onClick: (data: {
+          small: string;
           regular: string;
+          tags: string;
           alt_description: string | null;
           description: string | null;
           likes: number;
+          first_name: string;
           instagram_username: string;
           name: string;
       }) => void;
@@ -28,14 +30,18 @@ export default function ImageCard({ obj, onClick }: Props) {
         description,
     } = obj;
 
+    // const handleClick = () => {
+    //     onClick(obj);  // Передаємо повний об'єкт ModalBigPicture
+    // };
+
     const handleClick = () => {
         onClick({
-            regular,
-            alt_description,
-            description,
+             small, regular ,
+             first_name, instagram_username, name ,
             likes,
-            instagram_username,
-            name,
+            tags,
+            alt_description,
+            description,  
         });
     };
     return (
@@ -60,6 +66,17 @@ export default function ImageCard({ obj, onClick }: Props) {
 
     );
 };
+
+
+
+
+
+
+
+
+
+
+
 
 // типізація чілдренів children в функції яка повертає розмітку (типами вбудованими в РЕАКТ)
 // type Props = {

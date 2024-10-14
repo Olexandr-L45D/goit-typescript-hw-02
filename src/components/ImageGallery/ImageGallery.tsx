@@ -1,11 +1,10 @@
 import css from './ImageGallery.module.css';
 import ImageCard from "../ImageCard/ImageCard";
-import { ModalPicture, UserPicture } from '../../types';
-import { ImageModalProps } from '../ImageModal/ImageModal';
+import { ModalBigPicture, UserPicture } from '../../types';
 
 interface ImageGalleryProps {
     items: UserPicture[];
-    onClick: (data: ModalPicture) => void;
+    onClick: (data: ModalBigPicture) => void;
 }
 
 export default function ImageGallery({ items, onClick }: ImageGalleryProps) {

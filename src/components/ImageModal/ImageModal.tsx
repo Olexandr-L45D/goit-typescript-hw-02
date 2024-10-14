@@ -4,13 +4,12 @@ import Modal from 'react-modal';
 import { FiUser } from "react-icons/fi";
 import { FiThumbsUp } from "react-icons/fi";
 import { FiInstagram } from "react-icons/fi";
-import { ModalPicture } from '../../types';
+import { ModalBigPicture, ModalPicture } from '../../types';
 
 Modal.setAppElement("#root");
-// Modal.getElementById("#root");
 
 export interface ImageModalProps {
-  data: ModalPicture | null;
+  data: ModalBigPicture | null;
   isOpen: boolean;
   onClose: () => void;
 };
@@ -19,12 +18,13 @@ export default function ImageModal({ data, isOpen, onClose }: ImageModalProps) {
   if (!data) {
     return null;
   }
-  // console.log(data);
-  const { urls: { regular },
+  const {
+    regular,
+    first_name, instagram_username, name,
+    likes,
+    tags,
     alt_description,
     description,
-    likes,
-    user: { instagram_username, name }
   } = data;
 
   return (
@@ -36,7 +36,7 @@ export default function ImageModal({ data, isOpen, onClose }: ImageModalProps) {
         overlayClassName={css.overlay}
       >
         <div className={css.modalCart}>
-          <img src={regular} alt={alt_description} className={css.image} />
+          <img src={regular} alt={alt_description || undefined} className={css.image} />
           <div className={css.cardCommant}>
             <div className={css.comItem}>
               <p className={css.commant}>

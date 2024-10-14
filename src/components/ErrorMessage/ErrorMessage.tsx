@@ -2,10 +2,9 @@
 import css from "./ErrorMessage.module.css";
 
 type Props = {
-    // error: React.ReactElement;
     masseg: string | null;
   };
-//   який тип повертає функція ErrorMessage ?
+
 export default function ErrorMessage({ masseg }: Props) {
 
     return (
@@ -15,6 +14,32 @@ export default function ErrorMessage({ masseg }: Props) {
         </div>
     );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // type Props = {
 //     name: string;

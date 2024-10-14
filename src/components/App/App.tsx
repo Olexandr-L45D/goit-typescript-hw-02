@@ -2,20 +2,17 @@ import axios from "axios";
 import css from './App.module.css'
 import { useState, useEffect } from "react";
 import SearchBar from "../SearchBar/SearchBar"
-import ColorRing from "../Loader/Loader"
 import ImageGallery from "../ImageGallery/ImageGallery"
 import { getAsyncImage } from "../../articles-api"
 import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn"
-import ImageModal, { ImageModalProps } from "../ImageModal/ImageModal"
-import { ModalPicture, UserPicture } from "../../types";
+import ImageModal from "../ImageModal/ImageModal"
+import { ModalBigPicture, UserPicture } from "../../types";
 import RotatingLoader from "../Loader/Loader";
-// import { useModal } from "react-modal-hook";
 
 export default function App() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  // const [isOpen, setIsOpen] = useModal<boolean>(false);
-  const [selectedPicture, setSelected] = useState<ModalPicture | null>(null);
+  const [selectedPicture, setSelected] = useState<ModalBigPicture | null>(null);
   const [articles, setArticles] = useState<UserPicture[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,7 +22,7 @@ export default function App() {
     const savClicks = window.localStorage.getItem("my-clicks");
     return savClicks !== null && JSON.parse(savClicks) && "";
   });
-  // перший фетч http на ефекті щоб спрацювало один раз при монтуванні
+
   useEffect(() => {
     if (topic === "") {
       return;
@@ -60,7 +57,7 @@ export default function App() {
     setPage(page + 1);
   };
 
-  const openModal = (data: ModalPicture) => {
+  const openModal = (data: ModalBigPicture) => {
     setIsOpen(true);
     setSelected(data)
   };
@@ -82,7 +79,7 @@ export default function App() {
         <>
           {page >= totalPages && <ErrorMessage masseg={error} />}
           {error && <ErrorMessage masseg={error} />}
-          {loading && <RotatingLoader />}
+          {loading && <RotatingLoader rotatingLoader={loading} />}
           {articles.length > 0 && !loading && (
             <LoadMoreBtn onAdd={handleLoadMore} />
           )}
@@ -94,23 +91,23 @@ export default function App() {
 }
 
 
-// приклад типізації станів компонента завантаження
-// type Status = 'loading' | 'idle' | 'error';
 
-// export function LoadingComponent() {
-//   const [status, setStatus] = useState<Status>('idle');
 
-//   const loadData = async () => {
-//     setStatus('loading');
-//     try {
-//       // Тут була б ваша логіка завантаження даних
-//       // У випадку успіху:
-//       setStatus('idle');
-//     } catch (error) {
-//       // У випадку помилки:
-//       setStatus('error');
-//     }
-//   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2,14 +2,15 @@
 import css from "./ErrorMessage.module.css";
 
 type Props = {
-    error: React.ReactElement;
+    // error: React.ReactElement;
+    masseg: string | null;
   };
 //   який тип повертає функція ErrorMessage ?
-export default function ErrorMessage({ error }: Props) {
+export default function ErrorMessage({ masseg }: Props) {
 
     return (
         <div className={css.notifCard}>
-            <h3 className={css.notifi}>{error}</h3>
+            <h3 className={css.notifi}>{masseg}</h3>
 
         </div>
     );

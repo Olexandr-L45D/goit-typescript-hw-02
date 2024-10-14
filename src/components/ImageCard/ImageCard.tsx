@@ -2,24 +2,47 @@ import css from "./ImageCard.module.css"
 import { FiUser } from "react-icons/fi";
 import { FiThumbsUp } from "react-icons/fi";
 import { FiInstagram } from "react-icons/fi";
-import { UserPicture } from "../../types";
+import { ModalPicture, UserPicture } from "../../types";
+import { MouseEventHandler } from "react";
   
   type Props = {
-      obj: UserPicture;
-      onClick: () => void;
+      obj: ModalPicture;
+      onClick: (data: {
+          regular: string;
+          alt_description: string | null;
+          description: string | null;
+          likes: number;
+          instagram_username: string;
+          name: string;
+      }) => void;
   };
   
 export default function ImageCard({ obj, onClick }: Props) {
 
     const {
-        user: { first_name, instagram_username }, likes, tags, urls: { small }
-    } = obj
+        urls: { small, regular },
+        user: { first_name, instagram_username, name },
+        likes,
+        tags,
+        alt_description,
+        description,
+    } = obj;
 
+    const handleClick = () => {
+        onClick({
+            regular,
+            alt_description,
+            description,
+            likes,
+            instagram_username,
+            name,
+        });
+    };
     return (
 
         <div className={css.card}  >
 
-            <img className={css.imag} src={small} alt={tags} onClick={onClick} />
+            <img className={css.imag} src={small} alt={tags} onClick={handleClick} />
 
             <div className={css.cardCommant}>
                 <div className={css.comItem}>

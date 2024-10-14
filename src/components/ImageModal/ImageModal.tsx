@@ -10,7 +10,7 @@ Modal.setAppElement("#root");
 // Modal.getElementById("#root");
 
 export interface ImageModalProps {
-  data: ModalPicture;
+  data: ModalPicture | null;
   isOpen: boolean;
   onClose: () => void;
 };

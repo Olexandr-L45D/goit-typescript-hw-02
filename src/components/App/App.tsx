@@ -9,15 +9,16 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn"
 import ImageModal, { ImageModalProps } from "../ImageModal/ImageModal"
 import { ModalPicture, UserPicture } from "../../types";
+import RotatingLoader from "../Loader/Loader";
 // import { useModal } from "react-modal-hook";
 
 export default function App() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   // const [isOpen, setIsOpen] = useModal<boolean>(false);
-  const [selectedPicture, setSelected] = useState<ImageModalProps | null>(null);
+  const [selectedPicture, setSelected] = useState<ModalPicture | null>(null);
   const [articles, setArticles] = useState<UserPicture[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1000);
   const [page, setPage] = useState<number>(1);
   const [topic, setTopic] = useState<string>(() => {
@@ -32,12 +33,15 @@ export default function App() {
     async function getArticles() {
       try {
         setLoading(true);
-        setError(false);
+        setError(null);
         const data = await getAsyncImage(topic, page);
         setArticles((prevState) => [...prevState, ...data.results]); // подвійне розпилення обовязкове тому що ми додаємо до вже існуючого масиву/сторінки
         setTotalPages(data.total_pages);
       } catch (error) {
-        setError(true);
+        if (error instanceof Error) { setError(error.message); }
+        else {
+          setError('Sorry this not');
+        }
       } finally {
         setLoading(false);
       }
@@ -56,7 +60,7 @@ export default function App() {
     setPage(page + 1);
   };
 
-  const openModal = (data: ImageModalProps) => {
+  const openModal = (data: ModalPicture) => {
     setIsOpen(true);
     setSelected(data)
   };
@@ -76,9 +80,9 @@ export default function App() {
           {articles.length > 0 && <ImageGallery items={articles} onClick={openModal} />}
         </>
         <>
-          {page >= totalPages && <ErrorMessage />}
-          {error && <ErrorMessage />}
-          {loading && <ColorRing />}
+          {page >= totalPages && <ErrorMessage masseg={error} />}
+          {error && <ErrorMessage masseg={error} />}
+          {loading && <RotatingLoader />}
           {articles.length > 0 && !loading && (
             <LoadMoreBtn onAdd={handleLoadMore} />
           )}

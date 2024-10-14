@@ -15,12 +15,13 @@ export interface UserPictSize {
 export interface User {
   first_name: string;
   instagram_username: string;
-  // name?: string
+  name: string
 }
 export interface UserPicture {
   id: string;
   urls: UserPictSize;
   alt_description: string;
+  description?: string;
   likes: number;
   user: User;
   tags: string;
@@ -31,18 +32,12 @@ export interface ArticleResponc {
   total_pages: number;
 };
 export interface ModalPicture {
-  urls: { regular: string };
+  urls: UserPictSize;
   alt_description: string;
-  description?: string;
+  description: string | null;
   likes: number;
-  user: {
-    instagram_username: string;
-    name: string;
-  }
+  tags: string;
+  user: User;
 };
 
-// export interface ImageModalProps {
-//   data: ModalPicture;
-//   isOpen: boolean;
-//   onClose: boolean;
-// }
+

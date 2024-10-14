@@ -7,12 +7,14 @@ import ImageGallery from "../ImageGallery/ImageGallery"
 import { getAsyncImage } from "../../articles-api"
 import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn"
-import ImageModal from "../ImageModal/ImageModal"
+import ImageModal, { ImageModalProps } from "../ImageModal/ImageModal"
 import { ModalPicture, UserPicture } from "../../types";
+// import { useModal } from "react-modal-hook";
 
 export default function App() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedPicture, setSelected] = useState<ModalPicture | null>(null);
+  // const [isOpen, setIsOpen] = useModal<boolean>(false);
+  const [selectedPicture, setSelected] = useState<ImageModalProps | null>(null);
   const [articles, setArticles] = useState<UserPicture[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
@@ -49,11 +51,12 @@ export default function App() {
     setPage(1);
     setArticles([]);
   };
-  // функція handleLoadMore при події клік на кнопці- додавання нових порцій сторінок(збільшую знач page на один, відключаю кнопку, після запиту на сервер відмаловуємо розмітку і включаю як прийшов позитивний результат)
+
   const handleLoadMore = (): void => {
     setPage(page + 1);
   };
-  const openModal = (data: ModalPicture): void => {
+
+  const openModal = (data: ImageModalProps) => {
     setIsOpen(true);
     setSelected(data)
   };

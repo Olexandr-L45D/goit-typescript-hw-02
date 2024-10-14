@@ -4,9 +4,18 @@ import Modal from 'react-modal';
 import { FiUser } from "react-icons/fi";
 import { FiThumbsUp } from "react-icons/fi";
 import { FiInstagram } from "react-icons/fi";
-// import { FiX } from "react-icons/fi";
+import { ModalPicture } from '../../types';
+
 Modal.setAppElement("#root");
-export default function ImageModal({ data, isOpen, onClose }) {
+// Modal.getElementById("#root");
+
+export interface ImageModalProps {
+  data: ModalPicture;
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export default function ImageModal({ data, isOpen, onClose }: ImageModalProps) {
   if (!data) {
     return null;
   }

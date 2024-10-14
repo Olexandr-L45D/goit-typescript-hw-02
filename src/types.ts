@@ -29,10 +29,20 @@ export interface UserPicture {
 export interface ArticleResponc {
   results: UserPicture[];
   total_pages: number;
-}
+};
 export interface ModalPicture {
   urls: { regular: string };
   alt_description: string;
+  description?: string;
   likes: number;
-  user: { instagram_username: string; name: string }
-}
+  user: {
+    instagram_username: string;
+    name: string;
+  }
+};
+
+// export interface ImageModalProps {
+//   data: ModalPicture;
+//   isOpen: boolean;
+//   onClose: boolean;
+// }

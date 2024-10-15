@@ -10,20 +10,12 @@ import React, { MouseEvent } from 'react';
     //     values: string | number | null;
     // }
 
-// export default function LoadMoreBtn({ onAdd }: LoadMoreBtnProps)
-export default function LoadMoreBtn({ onAdd })
-{
-
-    const handleClick = (values: MouseEvent<HTMLButtonElement>) => {
-        // values.stopPropagation();
-        // onAdd<T>(values: T);
-        onAdd(values)
-        // console.log(values);
-    };
+export default function LoadMoreBtn({ onAdd }: LoadMoreBtnProps)
+ {
     return <>
         <div className={css.container}>
             <form className={css.styleBtn} >
-                <button className={css.button} onClick={handleClick} type="button">
+                <button className={css.button} onClick={onAdd} type="button">
                     Load more
                 </button>
             </form>
@@ -31,6 +23,29 @@ export default function LoadMoreBtn({ onAdd })
         </div>
     </>
 };
+
+
+
+// export default function LoadMoreBtn({ onAdd })
+// {
+
+//     // const handleClick = (values: MouseEvent<HTMLButtonElement>) => {
+//     //     // values.stopPropagation();
+//     //     // onAdd<T>(values: T);
+//     //     onAdd(values)
+//     //     // console.log(values);
+//     // };
+//     return <>
+//         <div className={css.container}>
+//             <form className={css.styleBtn} >
+//                 <button className={css.button} onClick={handleClick} type="button">
+//                     Load more
+//                 </button>
+//             </form>
+
+//         </div>
+//     </>
+// };
 
 // приклад з конспекту звичайний клік
 // function ChildComponent() {
